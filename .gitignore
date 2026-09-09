@@ -1,0 +1,30 @@
+# Existing rules: environments, downloaded data and derived/runtime outputs
+.venv/
+data/
+out/
+__pycache__/
+*.pyc
+*.egg-info/
+web/data/
+
+# Additional generated package, test and build files
+*.pyo
+*.pyd
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Machine-local settings and credentials
+.DS_Store
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+/.claude/settings.local.json
+*.log
