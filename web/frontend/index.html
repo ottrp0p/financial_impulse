@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impulse Screener</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header id="hdr">
+  <div class="brand">
+    <select id="screenSel" title="screen"></select>
+    <button id="newScreen" class="ghost">＋ new</button>
+    <button id="delScreen" class="ghost" title="delete this screen">🗑</button>
+  </div>
+  <div class="asof" id="asof"></div>
+  <div class="strip" id="strip"></div>
+  <div class="actions"><button id="refresh">Refresh</button></div>
+</header>
+<div id="jobbar" class="jobbar" hidden><span class="spin"></span><span id="jobtext"></span><span id="jobticks" class="ticks"></span></div>
+<nav id="tabs">
+  <button data-tab="today" class="on">Today</button>
+  <button data-tab="screen">Screen</button>
+  <button data-tab="book">Book</button>
+  <button data-tab="name">Name</button>
+</nav>
+<main>
+  <section id="tab-today" class="tab on">
+    <div class="two">
+      <div><h2>Long book</h2><div id="todayLong"></div></div>
+      <div><h2>Short book</h2><div id="todayShort"></div></div>
+    </div>
+    <h2>Positions</h2>
+    <div class="tablewrap"><table id="posTable"></table></div>
+  </section>
+
+  <section id="tab-screen" class="tab">
+    <div class="two">
+      <div class="panel">
+        <h2>Long side</h2>
+        <div class="row"><input id="addLong" placeholder="tickers, comma separated"><button data-side="1" class="add">Add</button></div>
+        <div id="listLong" class="chips"></div>
+        <h3>Strategy</h3>
+        <div class="row"><select id="presetLong" data-side="1" class="preset"></select></div>
+        <div id="paramsLong" class="params"></div>
+      </div>
+      <div class="panel">
+        <h2>Short side</h2>
+        <div class="row"><input id="addShort" placeholder="tickers, comma separated"><button data-side="-1" class="add">Add</button></div>
+        <div id="listShort" class="chips"></div>
+        <h3>Strategy</h3>
+        <div class="row"><select id="presetShort" data-side="-1" class="preset"></select></div>
+        <div id="paramsShort" class="params"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="row wrap">
+        <label>1 unit = $<input id="unitDollars" type="number" step="100" style="width:110px"></label>
+        <button id="generate" class="primary">Generate</button>
+        <span id="jobStatus" class="muted"></span>
+      </div>
+      <div id="addResult" class="small"></div>
+      <div class="row wrap" hidden>
+      </div>
+      <p class="muted small">Generate pulls prices, fits the field at every close, and starts the live book <b>flat today</b>. The backtest assumes the rule was always running. Names dropped later are liquidated at the next close in both ledgers. <b>Strategy changes apply going forward</b> on the live book — open units are carried across and the new rule governs their exits and all new entries from that day; the backtest always shows the current settings over the whole history.</p>
+      <div id="eventLog" class="small"></div>
+    </div>
+  </section>
+
+  <section id="tab-book" class="tab">
+    <div class="tiles" id="bookTiles"></div>
+    <div class="row wrap"><span class="legend"><i class="sw bt"></i> backtest (always running)</span><span class="legend"><i class="sw lv"></i> live (since inception)</span></div>
+    <h2>Exposure</h2><div class="panel" id="expoChart"></div>
+    <h2>Equity</h2><div class="panel" id="eqChart"></div>
+    <h2>Per name</h2>
+    <div class="tablewrap"><table id="nameTable"></table></div>
+  </section>
+
+  <section id="tab-name" class="tab">
+    <div class="row wrap"><input id="nameSearch" placeholder="search ticker…" autocomplete="off" style="max-width:180px;flex:0 1 180px"><select id="nameSel" size="1"></select><span class="muted" id="nameMeta"></span></div>
+    <div class="tiles" id="nameTiles"></div>
+    <div class="panel" id="nameChart"></div>
+    <h2>Trades</h2>
+    <div class="tablewrap"><table id="tradeTable"></table></div>
+  </section>
+</main>
+<div id="tip" class="tip"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
